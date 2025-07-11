@@ -6,7 +6,7 @@
   <title>Glia Beta</title>
 
   <script>
-    window.getGliaContext = function() {
+    window.getGliaContext = function () {
       function extractQueryParamValueFromString(paramName, urlString) {
         var regex = new RegExp("[?|&]" + paramName + "=([^&]*)");
         var executedRegex = urlString.match(regex);
@@ -26,6 +26,8 @@
   <script src="//api.beta.salemove.com/salemove_integration.js"></script>
 
   <h1 style="text-align: center;">Glia Beta Site</h1>
+
+  <button id="test-button" style="display: block; margin: 0 auto;">TEST</button>
 </body>
 
 </html>
