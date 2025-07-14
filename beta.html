@@ -31,6 +31,21 @@
     </ul>
   </menu>
   <script src="//api.beta.salemove.com/salemove_integration.js"></script>
+  <script>
+    sm.getApi({ version: 'v1' }).then(function (glia) {
+      fetch('https://ipapi.co/json')
+        .then(response => response.json())
+        .then(data => {
+          console.info('Setting visitor location')
+          const location = data.country === 'EE' ? 'EE' : 'other';
+          glia.updateInformation({
+            customAttributes: {
+              location: location
+            }
+          })
+        })
+    });
+  </script>
 
   <h1 style="text-align: center;">Glia Beta Site</h1>
 
