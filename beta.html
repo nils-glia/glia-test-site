@@ -6,6 +6,11 @@
   <title>Glia Beta</title>
 
   <script>
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const idToken = params.idtoken;
+
     window.getGliaContext = function () {
       function extractQueryParamValueFromString(paramName, urlString) {
         var regex = new RegExp("[?|&]" + paramName + "=([^&]*)");
@@ -16,7 +21,8 @@
       var queryParamName = "external_session_id";
 
       return {
-        sessionId: extractQueryParamValueFromString(queryParamName, window.location.href)
+        sessionId: extractQueryParamValueFromString(queryParamName, window.location.href),
+        idToken
       };
     };
   </script>
