@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Glia Beta</title>
+
+  <script>
+    window.getGliaContext = function () {
+      function extractQueryParamValueFromString(paramName, urlString) {
+        var regex = new RegExp("[?|&]" + paramName + "=([^&]*)");
+        var executedRegex = urlString.match(regex);
+        return !executedRegex ? null : executedRegex[1];
+      }
+
+      var queryParamName = "external_session_id";
+
+      return {
+        sessionId: extractQueryParamValueFromString(queryParamName, window.location.href)
+      };
+    };
+  </script>
+</head>
+
+<body>
+  <menu>
+    <ul>
+      <li>
+        <a href="../beta.html">Home</a>
+      </li>
+    </ul>
+  </menu>
+  <script src="//api.beta.salemove.com/salemove_integration.js"></script>
+  <script>
+    console.info('Salemove integration script loaded');
+    sm.getApi({ version: 'v1' }).then(function (glia) {
+
+      function addSubmitListener(engagement) {
+        console.info('Added submit listener');
+        const signUpForm = document.getElementById('signup-form');
+
+        signUpForm.addEventListener('submit', function () {
+          console.info('Sign up form submitted');
+          engagement.recordEvent({ message: 'visitor-signed-up' });
+        });
+      }
+
+      glia.addEventListener(glia.EVENTS.ENGAGEMENT_START, addSubmitListener);
+    });
+  </script>
+
+  <h1 style="text-align: center;">Glia Beta Site</h1>
+
+  <form method="get" action="../beta.html" id="signup-form">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <input type="submit" value="Submit">
+  </form>
+</body>
+
+</html>
